@@ -1,0 +1,49 @@
+<quakeml xmlns="http://quakeml.org/xmlns/quakeml/1.2">
+<eventParameters publicID="smi:ISC/bulletin">
+<creationInfo>
+<agencyID>ISC</agencyID>
+<creationTime>2018-05-14T00:58:58</creationTime>
+</creationInfo>
+<description>ISC Bulletin - Catalogue output</description>
+<event publicID="smi:ISC/evid=7434650">
+<preferredOriginID>smi:ISC/origid=7811820</preferredOriginID>
+<description>
+<text>Timor region</text>
+<type>Flinn-Engdahl region</type>
+</description>
+<type>earthquake</type>
+<origin publicID="smi:ISC/origid=7811820">
+<time>
+<value>2004-11-11T21:26:42.35Z</value>
+<uncertainty>0.88</uncertainty>
+</time>
+<latitude>
+<value>-8.1491</value>
+</latitude>
+<longitude>
+<value>124.7441</value>
+</longitude>
+<depth>
+<value>23061.5</value>
+</depth>
+<quality>
+<usedPhaseCount>508</usedPhaseCount>
+<associatedStationCount>946</associatedStationCount>
+<standardError>1.2590</standardError>
+<azimuthalGap>26.490</azimuthalGap>
+<minimumDistance>2.285</minimumDistance>
+<maximumDistance>99.940</maximumDistance>
+</quality>
+<creationInfo>
+<author>ISC</author>
+</creationInfo>
+<originUncertainty>
+<preferredDescription>uncertainty ellipse</preferredDescription>
+<minHorizontalUncertainty>3.1367</minHorizontalUncertainty>
+<maxHorizontalUncertainty>4.8484</maxHorizontalUncertainty>
+<azimuthMaxHorizontalUncertainty>109.8</azimuthMaxHorizontalUncertainty>
+</originUncertainty>
+</origin>
+</event>
+</eventParameters>
+</quakeml>

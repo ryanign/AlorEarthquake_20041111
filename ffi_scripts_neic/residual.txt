@@ -1,0 +1,1 @@
+ntw vrmax th strike dip hypo.z gamma_b gamma_s gamma_t gamma_d beta vrncsP vrncsSH vrncsR vrncsL misfit_disp 
