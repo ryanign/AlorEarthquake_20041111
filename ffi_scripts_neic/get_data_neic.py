@@ -15,7 +15,6 @@ from obspy.core import read,UTCDateTime,Trace,Stream
 from obspy.core.event import Pick
 import os,warnings
 import pickle
-#sys.path.append( os.environ['HOME'] + '/sandpit/ffipy')
 source_dir = os.environ['HOME'] + '/RSES-u5484353/Academics/PhD_research/02_HistoricalTsunamis/1992_Flores/20041111_Alor_earthquake/seismic_inversion/philscode'
 sys.path.append(source_dir)
 from ffi import kiksyn,read_velmod,delay,thetasr
@@ -29,7 +28,6 @@ from obspy.geodetics import locations2degrees,kilometer2degrees
 from obspy.geodetics.base import gps2dist_azimuth
 import matplotlib.gridspec as gridspec
 from scipy.optimize import nnls
-#from fault7 import neic2fault,Point,Fault,rectsmooth,SubFault,velmod_findparam
 from fault8 import Point,Fault,rectsmooth,SubFault,velmod_findparam,neic2fault
 from scipy.interpolate import UnivariateSpline
 from pyproj import Geod
@@ -671,7 +669,7 @@ def main(phases):
     
     #stalocs = {'KDAK':'10'}
     stalocs = {}
-    mseed_filename = '../data/2004-11-11-mw75-timor-region.miniseed'
+    mseed_filename = '../data/2004-11-11-mw75-timor-region-2.miniseed'
     client = Client('IRIS') 
     #client = Client('http://localhost:8080')
     #client = Client('http://compute2.rses.anu.edu.au:8080')
@@ -702,7 +700,7 @@ def main(phases):
     if FAULT_FROM_PKL:
         fault = pickle.load(open('fault_neic.pkl','r'))
     else: 
-        fault = neic2fault('fsp2.param.txt',org,xdr=-0.375,
+        fault = neic2fault('p000d85g.param',org,xdr=-0.375,
                             velmod=read_velmod('./velmod.txt'),NEIC_potency=True)
     
     # Set parameters for deconvolution and time windowing
@@ -761,7 +759,8 @@ def main(phases):
                 stobs_body[key] = stobs[key]
         pickle.dump(stobs_body,open(stobs_path,"wb"))
         figs['Body'] = plt.figure(figsize=(12.,12.))
-        
+
+#    """
     ### Plot the data
     npl_col = 2 # One for body and one for surface waves
     ax_wvf = {}
@@ -772,7 +771,7 @@ def main(phases):
         stref = bodysynth_fault(fault,stobs,windows['P'][0])
     else:
         stref = {}
-    #stref,d5 = surfsynth_fault(fault,th,org.time,stobs['R'],frq4,gvel_win['R'])
+    ##stref,d5 = surfsynth_fault(fault,th,org.time,stobs['R'],frq4,gvel_win['R'])
     mxtrc = max(ntrc['R'],ntrc['L'])
     ncol = mxtrc/11+1
     nrow = min(11,mxtrc)
@@ -780,10 +779,13 @@ def main(phases):
     if 'R' in stobs.keys():
         plt.figure(figs['Surf'].number)
         phs = 'R'
+        #.return stobs
         stref[phs],d5 = surfsynth_fault(fault,th,org.time,stobs[phs],frq4[phs],windows[phs])
+        return stobs,stref
         ax_wvf['R'] = plt.subplot2grid((2,npl_col), (0,0), rowspan=2, colspan=1)
         plot_datacomp(ax_wvf['R'],stobs,['R'],stref,origin,
                             rowcol=(nrow,ncol),yscale=0.25,ttick=500.)
+        plt.show()
     if 'L' in stobs.keys():
         plt.figure(figs['Surf'].number)
         phs = 'L'
@@ -796,6 +798,7 @@ def main(phases):
     ncol = mxtrc/11+1
     nrow = min(11,mxtrc)
     print mxtrc,nrow,ncol
+    sys.exit(0)
     if 'P' in stobs.keys():
         plt.figure(figs['Body'].number)     
         #stref = None
@@ -818,7 +821,9 @@ def main(phases):
         plt.savefig('getdata_RL.pdf')
                     
     plt.show()
+#    """
     return (fault,stref,stobs) #,d0,M
+    #return (fault,stobs)
 
 
 ###
